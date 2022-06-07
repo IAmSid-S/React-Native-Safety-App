@@ -1,1 +1,5 @@
-// empty file to track folder
+export default interface UserInfo{
+    userID: string;
+    userName: string;
+    authToken: string;
+}
