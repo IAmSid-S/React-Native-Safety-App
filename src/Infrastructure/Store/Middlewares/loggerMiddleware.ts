@@ -7,7 +7,7 @@ export const loggerMiddleware =
 (serviceProvider: IServiceProvider) : Middleware => 
 ({getState}: MiddlewareAPI) =>
 (next: AppDispatch) => 
-(action: Action) => 
+async (action: Action) => 
 {
     console.log('Logger : ' + action.type)
     return next(action);

@@ -1,8 +1,10 @@
+import UserInfo from "../../../Types/Models/UserModel";
+
 export interface IUserService{
     userID: string,
     userName: string,
     authToken: string,
     
-    getUserInfo(): void,
+    getUserInfo(): Promise<UserInfo>,
     logOut(): void
 }

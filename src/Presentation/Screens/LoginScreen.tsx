@@ -3,21 +3,15 @@ import { useEffect } from 'react'
 import { View, Text, Button } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserInfo } from '../../Infrastructure/Store/Slices/UserSlice';
-import { AppDispatch, RootState } from '../../Infrastructure/Store/store';
+import { AppDispatch, RootState, useAppSelector } from '../../Infrastructure/Store/store';
 
 function LoginScreen() {
-
-const dispatch = useDispatch<AppDispatch>();
-const user = useSelector((state: RootState) => state.User.value)
-  useEffect(()=> {
-    dispatch(updateUserInfo())
-  }, []);
+const user = useAppSelector(state => state.User.value)
 
   return (
     <View>
-      <Text>Login !!</Text>
+      <Text>PLease login</Text>
       <Text>Auth: {user.authToken}</Text>
-      <Button onPress={() => dispatch(updateUserInfo())} title='Login' />
     </View>
   )
 }

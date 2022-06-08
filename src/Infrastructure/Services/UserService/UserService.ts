@@ -1,3 +1,4 @@
+import UserInfo from "../../../Types/Models/UserModel";
 import { IUserService } from "./IUserService";
 
 export class UserService implements IUserService{
@@ -10,7 +11,7 @@ export class UserService implements IUserService{
     constructor() {
         
     }
-    getUserInfo(): void {
+    getUserInfo(): Promise<UserInfo> {
         throw new Error("Method not implemented.");
     }
     logOut(): void {

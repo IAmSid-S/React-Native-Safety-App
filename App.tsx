@@ -1,18 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { store } from './src/Infrastructure/Store/store';
-import { Provider} from 'react-redux'
+import { Provider } from 'react-redux'
+import { NavigationContainer } from '@react-navigation/native'
 import LoginScreen from './src/Presentation/Screens/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AppContainer from './src/Presentation/Screens/AppContainer';
+import LaunchScreen from './src/Presentation/Screens/LaunchScreen';
 
 export default function App() {
+
+  // const Stack = createNativeStackNavigator();
+
   return (
     <Provider store={store}>
-
-    <View style={styles.container}>
-      <Text>Safety App!</Text>
-      <StatusBar style="auto" />
-      <LoginScreen />
-    </View>
+      <AppContainer>
+        <LaunchScreen />
+      </AppContainer>
     </Provider>
   );
 }
