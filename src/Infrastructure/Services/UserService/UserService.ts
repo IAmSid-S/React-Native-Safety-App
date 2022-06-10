@@ -11,6 +11,15 @@ export class UserService implements IUserService{
     constructor() {
         
     }
+    refreshToken(): Promise<UserInfo> {
+        throw new Error("Method not implemented.");
+    }
+    login(): Promise<UserInfo> {
+        throw new Error("Method not implemented.");
+    }
+    register(): string {
+        throw new Error("Method not implemented.");
+    }
     getUserInfo(): Promise<UserInfo> {
         throw new Error("Method not implemented.");
     }

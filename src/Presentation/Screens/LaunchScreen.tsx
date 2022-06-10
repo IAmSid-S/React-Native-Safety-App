@@ -1,13 +1,14 @@
+
 import { View, Text, StyleSheet } from "react-native"
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useAppDispatch, useAppSelector } from "../../Infrastructure/Store/store";
-import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";
 import { login } from "../../Infrastructure/Store/Slices/UserSlice";
+import LoginNavigator from "../Utils/LoginNavigator";
 
 
 
-function LaunchScreen() {
+function LaunchScreen(): JSX.Element {
   const isSessionValid = useAppSelector(state => state.User.value.isSessionValid);
   console.log(isSessionValid)
   const dispatch = useAppDispatch();
@@ -19,9 +20,8 @@ function LaunchScreen() {
   }
 
   else if (isSessionValid === 'no')
-    return (<LoginScreen />)
+    return (<LoginNavigator />)
 
-  else if (isSessionValid === 'yes')
     return (<HomeScreen />)
 }
 

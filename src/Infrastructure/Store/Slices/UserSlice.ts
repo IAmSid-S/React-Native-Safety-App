@@ -6,7 +6,8 @@ const initialValue: UserInfo = {
     userID: '',
     userName: '',
     authToken: '',
-    isSessionValid: 'unchecked'
+    isSessionValid: 'unchecked',
+    loginErrors: ''
 }
 
 const initialState = {value: initialValue}
@@ -16,7 +17,7 @@ const userSlice = createSlice(
         name: 'User',
         initialState,
         reducers: {
-            updateUserInfo: (state, action: PayloadAction<UserInfo>) => {
+            updateUserInfo: (state: { value: UserInfo; }, action: PayloadAction<UserInfo>) => {
                 state.value = action.payload;
             }
         }

@@ -5,6 +5,9 @@ export interface IUserService{
     userName: string,
     authToken: string,
     
-    getUserInfo(): Promise<UserInfo>,
-    logOut(): void
+    refreshToken(): Promise<UserInfo>,
+    login(email: string, password: string): Promise<UserInfo>,
+    register(email: string, password: string, userName: string): string,
+    logOut(): void,
+    getUserInfo(): Promise<UserInfo | null>
 }

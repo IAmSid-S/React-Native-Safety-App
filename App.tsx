@@ -5,18 +5,14 @@ import { Provider } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
 import LoginScreen from './src/Presentation/Screens/LoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AppContainer from './src/Presentation/Screens/AppContainer';
+import AppContainer from './src/Presentation/Components/AppContainer';
 import LaunchScreen from './src/Presentation/Screens/LaunchScreen';
 
 export default function App() {
 
-  // const Stack = createNativeStackNavigator();
-
   return (
     <Provider store={store}>
-      <AppContainer>
         <LaunchScreen />
-      </AppContainer>
     </Provider>
   );
 }
