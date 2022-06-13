@@ -1,7 +1,7 @@
 import { Action, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import UserInfo from "../../../Types/Models/UserModel";
 import { IServiceProvider } from "../../Services/IserviceProvider";
-import { login, updateUserInfo } from "../Slices/UserSlice";
+import { login, updateUserInfo,clearAuthToken, logout } from "../Slices/UserSlice";
 import { AppDispatch, RootState } from "../store";
 
 export const userMiddleware = 
@@ -13,14 +13,32 @@ async (action: Action) =>
 {
     const currentState: RootState = getState()
     console.log(currentState)
+
+    if(logout.match(action)){
+        serviceProvider.UserService.logOut();
+        return next(clearAuthToken())
+    }
+
     if(currentState.User.value.isSessionValid === 'unchecked'){
         // if auth token present in memory -> refresh
-            // refresh successful -> update isSessionValid = true
-            // else set to no
+        let UserFromMemory = await serviceProvider.UserService.getUserInfo();
+            if(UserFromMemory && UserFromMemory.authToken){
+                const refreshedUserInfo = await serviceProvider.UserService.refreshToken();
+                return next(updateUserInfo(refreshedUserInfo));
+            }
+            else{
+                // if auth token absent in memory -> set isSessionValid to no
+                return next(clearAuthToken())
+            }
 
-        // if auth token absent in memory -> set isSessionValid to no
     }
     if(currentState.User.value.isSessionValid === 'no'){
-        // take to login scren
+        if(login.match(action)){
+            const userFromLogin = await serviceProvider.UserService.login(action.payload.email, action.payload.password);
+            console.log('Attempt login: ', userFromLogin)
+            return next(updateUserInfo(userFromLogin));
+        }
     }
+
+    return next(action);
 }

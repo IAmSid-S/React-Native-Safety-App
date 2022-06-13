@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { MockServiceProvider } from "../Services/MockServiceProvider";
 import { ServiceProvider } from "../Services/ServiceProvider";
 import { loggerMiddleware } from "./Middlewares/loggerMiddleware";
+import { metaMiddleware } from "./Middlewares/metaMiddleware";
 import { userMiddleware } from "./Middlewares/userMiddlewate";
 import UserSlice from "./Slices/UserSlice";
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
             loggerMiddleware(serviceProvider),
+            metaMiddleware(serviceProvider),
             userMiddleware(serviceProvider)
         )
     }

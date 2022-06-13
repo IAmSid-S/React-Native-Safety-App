@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native"
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { useAppDispatch, useAppSelector } from "../../Infrastructure/Store/store";
 import HomeScreen from "./HomeScreen";
-import { login } from "../../Infrastructure/Store/Slices/UserSlice";
+import { CheckUser, login } from "../../Infrastructure/Store/Slices/UserSlice";
 import LoginNavigator from "../Utils/LoginNavigator";
 
 
@@ -13,7 +13,7 @@ function LaunchScreen(): JSX.Element {
   console.log(isSessionValid)
   const dispatch = useAppDispatch();
   if (isSessionValid === "unchecked") {
-    dispatch(login())
+    dispatch(CheckUser())
     return (
       <View style={styles.container}><Icon size={100} style={styles.largeIcon} name="alarm-light" /><Text style={styles.titleFont}>Safety App</Text></View>
     )

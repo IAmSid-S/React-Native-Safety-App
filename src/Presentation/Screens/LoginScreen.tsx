@@ -2,9 +2,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, Text } from 'react-native'
 import { Card, TextInput, Button } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialIcons';
-import { AppDispatch, RootState, useAppSelector } from '../../Infrastructure/Store/store';
+import { AppDispatch, RootState, useAppDispatch, useAppSelector } from '../../Infrastructure/Store/store';
 import { LoginStackParamList } from '../Utils/LoginNavigator';
 import { useState } from 'react';
+import { login } from '../../Infrastructure/Store/Slices/UserSlice';
+import { useDispatch } from 'react-redux';
 
 type Props = NativeStackScreenProps<LoginStackParamList, 'Login'>
 
@@ -14,9 +16,11 @@ function LoginScreen(props: Props): JSX.Element {
   const goToRegister = () => {
     props.navigation.navigate('Register')
   }
+  const dispatch = useDispatch();
 
   const Login = () => {
-    
+    console.log(loginDetails);
+    dispatch(login(loginDetails));
   }
   return (
     <View>
@@ -34,3 +38,7 @@ function LoginScreen(props: Props): JSX.Element {
 }
 
 export default LoginScreen
+
+function payload(payload: any, arg1: { userID: string; password: string; }): any {
+  throw new Error('Function not implemented.');
+}

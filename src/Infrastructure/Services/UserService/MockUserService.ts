@@ -13,8 +13,19 @@ export class MockUserService implements IUserService{
     constructor() {
         
     }
-    refreshToken(): Promise<UserInfo> {
-        throw new Error("Method not implemented.");
+    async refreshToken(): Promise<UserInfo> {
+        const userInfo = await this.getUserInfo();
+        if(userInfo && userInfo.authToken){
+            return userInfo;
+        }
+        else {
+            return {
+            userID: '',
+            userName: '',
+            authToken: '',
+            loginErrors: '',
+            isSessionValid: 'no'
+        }}
     }
     async login(email: string, password: string): Promise<UserInfo> {
         await delay(5);
@@ -37,12 +48,12 @@ export class MockUserService implements IUserService{
             }
         }
 
-        if(email === 'sanat@gmail.com'){
+        if(email === 'sid2@gmail.com'){
             if(password === 'sid123'){
                 return {
                     userID: email,
-                    userName: 'Sanat',
-                    authToken: 'Sanat001234',
+                    userName: 'Sid2',
+                    authToken: 'Sid2001234',
                     loginErrors: '',
                     isSessionValid: 'yes'
                 }
@@ -72,7 +83,13 @@ export class MockUserService implements IUserService{
         return await getData<UserInfo>("USER_INFO");
     }
     logOut(): void {
-        throw new Error("Method not implemented.");
+        this.setUserInfo({
+            userID: '',
+            userName: '',
+            authToken: '',
+            loginErrors: '',
+            isSessionValid: 'no'
+        })
     }
 
     private async setUserInfo(userInfo: UserInfo) {
