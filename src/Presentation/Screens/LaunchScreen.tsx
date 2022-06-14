@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../Infrastructure/Store/store
 import HomeScreen from "./HomeScreen";
 import { CheckUser, login } from "../../Infrastructure/Store/Slices/UserSlice";
 import LoginNavigator from "../Utils/LoginNavigator";
+import AppNavigator from "../Utils/AppNavigator";
 
 
 
@@ -22,7 +23,7 @@ function LaunchScreen(): JSX.Element {
   else if (isSessionValid === 'no')
     return (<LoginNavigator />)
 
-    return (<HomeScreen />)
+    return (<AppNavigator />)
 }
 
 export default LaunchScreen

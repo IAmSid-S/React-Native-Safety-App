@@ -1,7 +1,7 @@
 import { Action, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import UserInfo from "../../../Types/Models/UserModel";
 import { IServiceProvider } from "../../Services/IserviceProvider";
-import { login, updateUserInfo,clearAuthToken, logout } from "../Slices/UserSlice";
+import { login, updateUserInfo,clearAuthToken, logout, updateLoadingStatus } from "../Slices/UserSlice";
 import { AppDispatch, RootState } from "../store";
 
 export const userMiddleware = 
@@ -34,10 +34,13 @@ async (action: Action) =>
     }
     if(currentState.User.value.isSessionValid === 'no'){
         if(login.match(action)){
+            next(updateLoadingStatus(true));
             const userFromLogin = await serviceProvider.UserService.login(action.payload.email, action.payload.password);
             console.log('Attempt login: ', userFromLogin)
+            next(updateLoadingStatus(false))
             return next(updateUserInfo(userFromLogin));
         }
+        
     }
 
     return next(action);

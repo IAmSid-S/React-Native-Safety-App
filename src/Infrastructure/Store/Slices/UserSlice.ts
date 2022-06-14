@@ -2,12 +2,15 @@ import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import UserInfo from "../../../Types/Models/UserModel";
 import { RootState } from "../store";
 
-const initialValue: UserInfo = {
+type UserInfoState = UserInfo & ({isLoading:boolean})
+
+const initialValue: (UserInfoState) = {
     userID: '',
     userName: '',
     authToken: '',
-    isSessionValid: 'unchecked',
-    loginErrors: ''
+    isSessionValid: 'yes',
+    loginErrors: '',
+    isLoading: false
 }
 
 const initialState = {value: initialValue}
@@ -29,8 +32,11 @@ const userSlice = createSlice(
             clearAuthToken(state : { value: UserInfo; }){
                 state.value.authToken = '';
                 state.value.isSessionValid = "no";
+            },
+            
+            updateLoadingStatus(state: { value: { isLoading: boolean; }; }, action: PayloadAction<boolean>){
+                state.value.isLoading = action.payload;
             }
-
 
         }
     }
@@ -41,7 +47,7 @@ export const CheckUser = createAction('CheckUser');
 export const register = createAction<{email: string, password: string, userName: string}>('Register');
 export const logout = createAction('Logout');
 
-export const {updateUserInfo, clearAuthToken, updateSessionValidity} = userSlice.actions;
+export const {updateUserInfo, clearAuthToken, updateSessionValidity, updateLoadingStatus} = userSlice.actions;
 export const selectUser = (state: RootState) => state.User.value;
 
 export default userSlice.reducer;

@@ -1,45 +1,81 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { Text, View, ToastAndroid, Alert } from 'react-native'
 import AppContainer from '../Components/AppContainer'
 import * as Location from 'expo-location';
 
-import MapView, {Marker} from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
+import { Button, TextInput } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { searchSafeLocationFromLatLong, searchSafeLocationFromPinCode } from '../../Infrastructure/Store/Slices/SafeLocationsSlice';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { AppStackParamList } from '../Utils/AppNavigator';
+import { NavigationContext, useNavigation } from '@react-navigation/native';
 
-function HomeScreen() {
+type HomeScreenProps = NativeStackScreenProps<AppStackParamList, 'Home'>
 
+function HomeScreen(props: HomeScreenProps) {
+  const [pinCode, setPincode] = useState('');
   const [location, setLocation] = useState<Location.LocationObject>()
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [locationLoadingError, setLocationLoadingError] = useState('');
+  const dispatch = useDispatch();
+  const navigation = useContext(NavigationContext)
 
-  useEffect(() => {
-    (async () => {
-      console.log('Finding location')
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status === 'granted') {
-        let currentLoc = await Location.getCurrentPositionAsync({});
-        console.log(currentLoc)
-        setLocation(currentLoc);
-      }
-    })();
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log('Finding location')
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status === 'granted') {
+  //       let currentLoc = await Location.getCurrentPositionAsync({});
+  //       console.log(currentLoc)
+  //       setLocation(currentLoc);
+  //     }
+  //   })();
 
-  }, [setLocation])
+  // }, [setLocation])
 
+  async function getLocation(): Promise<boolean> {
+    setLocationLoading(true)
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === 'granted') {
+      let currentLoc = await Location.getCurrentPositionAsync({});
+      setLocation(currentLoc);
+      setLocationLoading(false)
+      return currentLoc ? true : false;
+    }
+    else{
+      setLocationLoading(false);
+      return false;
+    }
+  }
+
+  const GetLocationByLatLong = async() => {
+    if(await getLocation()){
+      setLocationLoadingError('');
+      dispatch(searchSafeLocationFromLatLong({lat: location?.coords.latitude, long: location?.coords.longitude}))
+      props.navigation.navigate('SafeLocationList');
+    }
+    else{
+      setLocationLoadingError('Unable to access your location.')
+    }
+  }
+
+  function GetLocationByPinCode(){
+    dispatch(searchSafeLocationFromPinCode({pinCode}))
+    props.navigation.navigate('SafeLocationList');
+  }
 
   return (
     <AppContainer>
-      <View>
-        <Text>Welcome to the app!!</Text>
-        <Text>Location: {JSON.stringify(location?.coords)}</Text>
-        {location?.coords ? 
-        <MapView initialRegion={
-          {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.05
-          }
-        } style={{width: 500, height: 500}}>
-          <Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}} title="Sid" description='Greatness is here' pinColor='blue'/>
-        </MapView>
-        : null}
+      <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignContent: 'center', margin: 7, borderBottomColor: 'gray', borderBottomWidth: 1 }}>
+          <TextInput style={{ flex: 0.7, alignSelf: 'center', justifyContent: 'center', height: 50 }} label='PinCode' autoCapitalize='characters' value={pinCode} onChangeText={text => setPincode(text)} />
+          <Button disabled={pinCode.trim().length < 5} style={{ flex: 0.3, alignSelf: 'center', justifyContent: 'center', marginLeft: 5, height: 50 }} icon='shield-search' mode='contained' onPress={GetLocationByPinCode}>Go</Button>
+        </View>
+        <View style={{ flex: 1, height: '50%', alignContent: 'center', justifyContent: 'center', margin: 7 }}>
+          <Button style={{ alignSelf: 'center', justifyContent: 'center', marginLeft: 5, width: '50%', height: 50 }} icon='map-marker-radius' mode='contained' loading={locationLoading} disabled={locationLoading}  onPress={GetLocationByLatLong}>What's near me?</Button>
+          <Text style={{color: 'red'}}>{locationLoadingError}</Text>
+        </View>
       </View>
     </AppContainer>
   )

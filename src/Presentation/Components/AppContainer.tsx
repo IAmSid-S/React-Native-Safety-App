@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 const AndroidComponent = styled.View`
 margin-top: ${StatusBar.currentHeight}px;
 padding: 1px;
+flex: 1;
 `
 
 type ViewComponentProps = React.ComponentProps<typeof View>;

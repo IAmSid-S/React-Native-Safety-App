@@ -6,19 +6,23 @@ import { loggerMiddleware } from "./Middlewares/loggerMiddleware";
 import { metaMiddleware } from "./Middlewares/metaMiddleware";
 import { userMiddleware } from "./Middlewares/userMiddlewate";
 import UserSlice from "./Slices/UserSlice";
+import SafeLocationSlice from "./Slices/SafeLocationsSlice";
+import { safeLocationsMiddleware } from "./Middlewares/SafeLocationsMiddleware";
 
 
 const serviceProvider = new MockServiceProvider();
 
 export const store = configureStore({
     reducer:{
-        User: UserSlice
+        User: UserSlice,
+        SafeLocation: SafeLocationSlice
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat(
             loggerMiddleware(serviceProvider),
             metaMiddleware(serviceProvider),
-            userMiddleware(serviceProvider)
+            userMiddleware(serviceProvider),
+            safeLocationsMiddleware(serviceProvider)
         )
     }
 });
