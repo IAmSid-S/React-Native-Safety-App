@@ -9,13 +9,18 @@ padding: 1px;
 flex: 1;
 `
 
+const IosComponent = styled.SafeAreaView`
+padding: 1px;
+flex: 1;
+`
+
 type ViewComponentProps = React.ComponentProps<typeof View>;
 
 function AppContainer(props: ViewComponentProps) {
 
     if(Platform.OS === 'android') return <AndroidComponent>{props.children}</AndroidComponent>
 
-    else if(Platform.OS === 'ios') return <SafeAreaView>{props.children}</SafeAreaView>
+    else if(Platform.OS === 'ios') return <IosComponent>{props.children}</IosComponent>
 
     else return <View>{props.children}</View>;
 }

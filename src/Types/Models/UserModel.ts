@@ -5,3 +5,4 @@ export default interface UserInfo{
     loginErrors: string;
     isSessionValid: 'yes' | 'no' | 'unchecked'
 }
+

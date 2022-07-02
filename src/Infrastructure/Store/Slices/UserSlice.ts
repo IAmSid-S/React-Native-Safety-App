@@ -8,7 +8,7 @@ const initialValue: (UserInfoState) = {
     userID: '',
     userName: '',
     authToken: '',
-    isSessionValid: 'yes',
+    isSessionValid: 'unchecked',
     loginErrors: '',
     isLoading: false
 }
