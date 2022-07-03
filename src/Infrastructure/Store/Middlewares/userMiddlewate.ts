@@ -1,7 +1,7 @@
 import { Action, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import UserInfo from "../../../Types/Models/UserModel";
 import { IServiceProvider } from "../../Services/IserviceProvider";
-import { login, updateUserInfo,clearAuthToken, logout, updateLoadingStatus } from "../Slices/UserSlice";
+import { login, updateUserInfo,clearAuthToken, logout, updateLoadingStatus, updateRegisterError, register } from "../Slices/UserSlice";
 import { AppDispatch, RootState } from "../store";
 
 export const userMiddleware = 
@@ -19,12 +19,18 @@ async (action: Action) =>
         return next(clearAuthToken())
     }
 
+    if(register.match(action)){
+        const response = await serviceProvider.UserService.register(action.payload.email, action.payload.password, action.payload.userName);
+        return next(updateRegisterError(response));
+
+    }
+
     if(currentState.User.value.isSessionValid === 'unchecked'){
         // if auth token present in memory -> refresh
         let UserFromMemory = await serviceProvider.UserService.getUserInfo();
             if(UserFromMemory && UserFromMemory.authToken){
-                const refreshedUserInfo = await serviceProvider.UserService.refreshToken();
-                return next(updateUserInfo(refreshedUserInfo));
+                //const refreshedUserInfo = await serviceProvider.UserService.refreshToken();
+                return next(updateUserInfo(UserFromMemory));
             }
             else{
                 // if auth token absent in memory -> set isSessionValid to no
@@ -38,6 +44,10 @@ async (action: Action) =>
             const userFromLogin = await serviceProvider.UserService.login(action.payload.email, action.payload.password);
             console.log('Attempt login: ', userFromLogin)
             next(updateLoadingStatus(false))
+            if(userFromLogin.isSessionValid === 'yes')
+                serviceProvider.UserService.setUserInfo(userFromLogin);
+            else
+                serviceProvider.UserService.setUserInfo(null);
             return next(updateUserInfo(userFromLogin));
         }
         

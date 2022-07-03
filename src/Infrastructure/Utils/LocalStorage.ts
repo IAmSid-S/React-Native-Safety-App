@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LocalStorageConstants, LocalStorageStatus } from '../../Types/Constants/LocalStorageConstants';
 
+
 export const storeData = async (key: LocalStorageConstants, value: any): Promise<LocalStorageStatus> => {
     try {
       const jsonValue = JSON.stringify(value)

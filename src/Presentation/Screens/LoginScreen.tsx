@@ -29,7 +29,7 @@ function LoginScreen(props: Props): JSX.Element {
         <Card.Content>
           <TextInput label='Email' value={loginDetails.email} onChangeText={text => setLoginDetails(prev => {return {...prev, email: text}})} />
           <TextInput label='Password' secureTextEntry={true} value={loginDetails.password} onChangeText={text => setLoginDetails(prev => { return { ...prev, password: text }; })} autoCompleteType={undefined} />
-          <Text style={{color: 'red', alignSelf: 'center'}}>{user.loginErrors}</Text>
+          <Text style={{color: 'red', alignSelf: 'center'}}>{user.loginError}</Text>
         </Card.Content>
       <Button disabled={user.isLoading} loading={user.isLoading} onPress={Login}>Login</Button>
       <Button onPress={goToRegister}>Register</Button>

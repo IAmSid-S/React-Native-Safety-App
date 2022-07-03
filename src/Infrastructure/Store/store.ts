@@ -10,7 +10,7 @@ import SafeLocationSlice from "./Slices/SafeLocationsSlice";
 import { safeLocationsMiddleware } from "./Middlewares/SafeLocationsMiddleware";
 
 
-const serviceProvider = new MockServiceProvider();
+const serviceProvider = new ServiceProvider();
 
 export const store = configureStore({
     reducer:{

@@ -1,3 +1,4 @@
+import { UserRegisterResponse } from "../../../Types/API_Payloads/UserApiPayload";
 import UserInfo from "../../../Types/Models/UserModel";
 import { getData, storeData } from "../../Utils/LocalStorage";
 import { delay } from "../../Utils/MockHelpers";
@@ -13,6 +14,9 @@ export class MockUserService implements IUserService{
     constructor() {
         
     }
+    register(email: string, password: string, userName: string): Promise<UserRegisterResponse> {
+        throw new Error("Method not implemented.");
+    }
     async refreshToken(): Promise<UserInfo> {
         const userInfo = await this.getUserInfo();
         if(userInfo && userInfo.authToken){
@@ -23,7 +27,7 @@ export class MockUserService implements IUserService{
             userID: '',
             userName: '',
             authToken: '',
-            loginErrors: '',
+            loginError: '',
             isSessionValid: 'no'
         }}
     }
@@ -35,7 +39,7 @@ export class MockUserService implements IUserService{
                     userID: email,
                     userName: 'SID',
                     authToken: 'SID1234',
-                    loginErrors: '',
+                    loginError: '',
                     isSessionValid: 'yes'
                 }
             }
@@ -43,7 +47,7 @@ export class MockUserService implements IUserService{
                 userID: email,
                 userName: '',
                 authToken: '',
-                loginErrors: 'Incorrect password',
+                loginError: 'Invalid Password',
                 isSessionValid: 'no'
             }
         }
@@ -54,7 +58,7 @@ export class MockUserService implements IUserService{
                     userID: email,
                     userName: 'Sid2',
                     authToken: 'Sid2001234',
-                    loginErrors: '',
+                    loginError: '',
                     isSessionValid: 'yes'
                 }
             }
@@ -62,7 +66,7 @@ export class MockUserService implements IUserService{
                 userID: email,
                 userName: '',
                 authToken: '',
-                loginErrors: 'Incorrect password',
+                loginError: 'Invalid Password',
                 isSessionValid: 'no'
             }
         }
@@ -71,14 +75,10 @@ export class MockUserService implements IUserService{
             userID: email,
             userName: '',
             authToken: '',
-            loginErrors: 'No user found',
+            loginError: 'Invalid User',
             isSessionValid: 'no'
         }
     }
-    register(email: string, password: string, userName: string): string {
-        throw new Error("Method not implemented.");
-    }
-
     async getUserInfo(): Promise<UserInfo | null> {  
         return await getData<UserInfo>("USER_INFO");
     }
@@ -87,7 +87,7 @@ export class MockUserService implements IUserService{
             userID: '',
             userName: '',
             authToken: '',
-            loginErrors: '',
+            loginError: '',
             isSessionValid: 'no'
         })
     }

@@ -1,3 +1,4 @@
+import { UserRegisterResponse } from "../../../Types/API_Payloads/UserApiPayload";
 import UserInfo from "../../../Types/Models/UserModel";
 
 export interface IUserService{
@@ -7,7 +8,8 @@ export interface IUserService{
     
     refreshToken(): Promise<UserInfo>,
     login(email: string, password: string): Promise<UserInfo>,
-    register(email: string, password: string, userName: string): string,
+    register(email: string, password: string, userName: string): Promise<UserRegisterResponse>,
     logOut(): void,
     getUserInfo(): Promise<UserInfo | null>
+    setUserInfo(UserInfo: UserInfo | null):
 }
