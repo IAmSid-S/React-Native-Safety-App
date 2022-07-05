@@ -18,7 +18,7 @@ export const store = configureStore({
         SafeLocation: SafeLocationSlice
     },
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat(
+        return getDefaultMiddleware({serializableCheck: false}).concat(
             loggerMiddleware(serviceProvider),
             metaMiddleware(serviceProvider),
             userMiddleware(serviceProvider),

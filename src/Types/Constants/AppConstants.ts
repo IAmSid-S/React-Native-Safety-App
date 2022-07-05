@@ -5,7 +5,7 @@ export const AppConstants = {
     ApiResources: {
         Login: 'login',
         Register: 'register',
-        HospitalsByPostalCode: 'hospitals',
-        PoliceStationByPostalCode: 'police_stations'
+        SafeLocationsByPinCode: (pincode: string, distance: number) => `GetSafeLocationsByPincode?pincode=${pincode}&max_distance=${distance}`,
+        SafeLocationsByLatLong: (long: number, lat: number, distance: number) => `GetSafeLocationsByLatLong?longitude=${long}&latitude=${lat}&max_distance=${distance}`
     }
 }

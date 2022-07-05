@@ -3,5 +3,6 @@ export interface SafeLocation {
     address: string,
     type: 'police_station' | 'hospital',
     pinCode: string,
-    location: any
+    location: [number, number],
+    distance: number
 }

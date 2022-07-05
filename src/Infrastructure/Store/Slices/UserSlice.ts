@@ -1,6 +1,6 @@
 import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserRegisterResponse } from "../../../Types/API_Payloads/UserApiPayload";
-import UserInfo from "../../../Types/Models/UserModel";
+import UserInfo, { loginError } from "../../../Types/Models/UserModel";
 import { RootState } from "../store";
 
 type UserInfoState = UserInfo & ({isLoading:boolean}) &({registerError: UserRegisterResponse})
@@ -26,7 +26,7 @@ const userSlice = createSlice(
                 state.value = action.payload;
             },
 
-            updateSessionValidity: (state: { value: UserInfo; }, action: PayloadAction<{isSessionValid: UserInfo["isSessionValid"], loginErrors: string}>) => {
+            updateSessionValidity: (state: { value: UserInfo; }, action: PayloadAction<{isSessionValid: UserInfo["isSessionValid"], loginError: loginError}>) => {
                 state.value.isSessionValid = action.payload.isSessionValid;
                 state.value.loginError = action.payload.loginError;
             },

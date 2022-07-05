@@ -1,12 +1,13 @@
 import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { SafeLocation } from "../../../Types/Models/SafeLocation"
 
-type SafeLoactionState = {safeLocations: SafeLocation[]} & {isLoading: boolean, error: string}
+type SafeLoactionState = {safeLocations: SafeLocation[]} & {isLoading: boolean, error: string, abortRequest: AbortController}
 
 const initialValue : SafeLoactionState = { 
     safeLocations: [],
     isLoading: false,
-    error: ''
+    error: '',
+    abortRequest: new AbortController()
 }
 
 const initialState = {value: initialValue}
@@ -24,9 +25,10 @@ const safeLocationsSlice = createSlice(
                 state.value.safeLocations = []
             },
 
-            updateLoadingStatus(state: { value:{isLoading: boolean, error: string}} , action: PayloadAction<{isLoading: boolean, error: string}>){
+            updateLoadingStatus(state: { isLoading?: boolean; error?: string; value?: any }, action: PayloadAction<{isLoading: boolean, error: string, abortRequest: AbortController}>){
                 state.value.isLoading = action.payload.isLoading;
                 state.value.error = action.payload.error;
+                state.value.abortRequest = action.payload.abortRequest;
             }
         }
     }

@@ -11,7 +11,7 @@ function SafeLocationListScreen(): JSX.Element {
 
     return (
         <View style={{ flex: 1 }}>
-            <Text>Safe Locations in your PinCode: </Text>
+            <Text>Safe Locations in your PinCode </Text>
             {safeLocations.isLoading ? <ActivityIndicator size="large" /> : null}
             <View style={{backgroundColor: '#e3e1e1', marginTop: 10, marginHorizontal: 2, borderWidth: 0.2}}>
                 <List.AccordionGroup>
@@ -20,7 +20,7 @@ function SafeLocationListScreen(): JSX.Element {
                         <FlatList
                             data={safeLocations.safeLocations}
                             renderItem={({ item }) => <SafeLocationItem {...item}></SafeLocationItem>}
-                            keyExtractor={(item) => item.name}
+                            keyExtractor={(item, index) => item.distance.toString()}
                         />
                     }
                 </List.AccordionGroup>

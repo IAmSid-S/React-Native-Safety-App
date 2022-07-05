@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react'
 import { View, Text } from 'react-native'
 import { useDispatch } from 'react-redux';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, FontAwesome } from '@expo/vector-icons';
 import { register } from '../../Infrastructure/Store/Slices/UserSlice';
 import { Card, TextInput, Button } from 'react-native-paper'
 import { useAppSelector } from '../../Infrastructure/Store/store';
@@ -28,13 +28,16 @@ function RegisterScreen(): JSX.Element {
     <View>
       {
         (registerError === 'success') ?
-          <Card style={{ marginTop: '50%', marginHorizontal: 20 }}>
-            <Text>Registeration Request Sent</Text>
+          <Card style={{ marginTop: '50%', marginHorizontal: 20, height: 110, display: 'flex', justifyContent: 'space-between', alignContent: 'space-between'}}>
+            <View style={{display: 'flex', marginBottom: 20, flexDirection: 'row', marginHorizontal: 10,  alignContent: 'flex-end', justifyContent: 'flex-start' }}>
+            <FontAwesome name='check' size={50} color='#6200ee'/>
+            <Text style={{fontSize: 20, marginTop: 10}}>      Registeration Request Sent</Text>
+            </View>
             <Button onPress={() => navigation.goBack()}>Back</Button>
           </Card>
           :
           <View>
-            <Card style={{ marginTop: '50%', marginHorizontal: 20 }}>
+            <Card style={{ marginTop: '20%', marginHorizontal: 20 }}>
               <Card.Title style={{ height: 100 }} title="Register" left={(props) => <Entypo size={40} name="add-user" />} />
               <Card.Content>
                 <TextInput label='Name' value={registerDetails.userName} onChangeText={(text) => setRegisterDetails(prev => { return { ...prev, userName: text } })} />

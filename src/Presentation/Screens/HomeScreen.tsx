@@ -34,30 +34,36 @@ function HomeScreen(props: HomeScreenProps) {
 
   // }, [setLocation])
 
-  async function getLocation(): Promise<boolean> {
+  async function getLocation(): Promise<Location.LocationObject | null> {
     setLocationLoading(true)
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status === 'granted') {
       let currentLoc = await Location.getCurrentPositionAsync({});
       setLocation(currentLoc);
       setLocationLoading(false)
-      return currentLoc ? true : false;
+      return currentLoc;
     }
     else{
       setLocationLoading(false);
-      return false;
+      return null;
     }
   }
 
-  const GetLocationByLatLong = async() => {
-    if(await getLocation()){
-      setLocationLoadingError('');
-      dispatch(searchSafeLocationFromLatLong({lat: location?.coords.latitude, long: location?.coords.longitude}))
-      props.navigation.navigate('SafeLocationList');
-    }
-    else{
-      setLocationLoadingError('Unable to access your location.')
-    }
+  const GetLocationByLatLong = () => {
+    getLocation().then(res => {
+      if(res){
+        setLocationLoadingError('');
+        const action = searchSafeLocationFromLatLong({lat: res?.coords.latitude, long: res?.coords.longitude});
+        console.log(action)
+        console.log(action)
+        dispatch(action)
+        props.navigation.navigate('SafeLocationList');
+      }
+      else{
+        setLocationLoadingError('Unable to access your location.')
+      }
+    })
+
   }
 
   function GetLocationByPinCode(){

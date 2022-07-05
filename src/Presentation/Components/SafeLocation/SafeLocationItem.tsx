@@ -18,8 +18,10 @@ function SafeLocationItem(locationProps: SafeLocation): JSX.Element {
 
 
     return (
-        <List.Accordion title={locationProps.name} id={locationProps.name} style={{ backgroundColor: 'lightgray', borderWidth: 0.5, flex: 1 }}
-            left={(props) => <EstablishmentIcon {...props} locationType={locationProps.type} />}>
+        <List.Accordion title={locationProps.name} id={locationProps.distance} style={{ backgroundColor: 'lightgray', borderWidth: 0.5, flex: 1 }}
+            left={(props) => <EstablishmentIcon {...props} locationType={locationProps.type} />}
+            right={(props) => <Text style={{fontSize: 15, fontWeight: 'bold'}}>{locationProps.distance < 1000 ? `${locationProps.distance.toFixed(2)} meters` : `${(locationProps.distance/1000).toFixed(2)} KM` }</Text>}
+            >
             <List.Item
                 title="Address"
                 description={locationProps.address}

@@ -6,4 +6,4 @@ export default interface UserInfo{
     isSessionValid: 'yes' | 'no' | 'unchecked'
 }
 
-export type loginError = 'successful' | 'Invalid User' | 'Invalid Password' | 'Server Error' | '';
+export type loginError = 'successful' | 'user not found' | 'incorrect password' | 'Server Error' | '';
