@@ -8,6 +8,7 @@ import { userMiddleware } from "./Middlewares/userMiddlewate";
 import UserSlice from "./Slices/UserSlice";
 import SafeLocationSlice from "./Slices/SafeLocationsSlice";
 import { safeLocationsMiddleware } from "./Middlewares/SafeLocationsMiddleware";
+import CrimeSlice from "./Slices/CrimeSlice";
 
 
 const serviceProvider = new ServiceProvider();
@@ -15,7 +16,8 @@ const serviceProvider = new ServiceProvider();
 export const store = configureStore({
     reducer:{
         User: UserSlice,
-        SafeLocation: SafeLocationSlice
+        SafeLocation: SafeLocationSlice,
+        Crimes: CrimeSlice
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware({serializableCheck: false}).concat(

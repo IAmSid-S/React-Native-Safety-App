@@ -11,5 +11,5 @@ export interface IUserService{
     register(email: string, password: string, userName: string): Promise<UserRegisterResponse>,
     logOut(): void,
     getUserInfo(): Promise<UserInfo | null>
-    setUserInfo(UserInfo: UserInfo | null):
+    setUserInfo(UserInfo: UserInfo | null): void
 }

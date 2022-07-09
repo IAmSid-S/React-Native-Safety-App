@@ -47,7 +47,7 @@ export class MockUserService implements IUserService{
                 userID: email,
                 userName: '',
                 authToken: '',
-                loginError: 'Invalid Password',
+                loginError: 'incorrect password',
                 isSessionValid: 'no'
             }
         }
@@ -66,7 +66,7 @@ export class MockUserService implements IUserService{
                 userID: email,
                 userName: '',
                 authToken: '',
-                loginError: 'Invalid Password',
+                loginError: 'incorrect password',
                 isSessionValid: 'no'
             }
         }
@@ -75,7 +75,7 @@ export class MockUserService implements IUserService{
             userID: email,
             userName: '',
             authToken: '',
-            loginError: 'Invalid User',
+            loginError: 'incorrect password',
             isSessionValid: 'no'
         }
     }
@@ -92,7 +92,7 @@ export class MockUserService implements IUserService{
         })
     }
 
-    private async setUserInfo(userInfo: UserInfo) {
+    async setUserInfo(userInfo: UserInfo) {
         const result = await storeData('USER_INFO', userInfo);
     }
 }

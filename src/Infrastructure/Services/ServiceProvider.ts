@@ -1,3 +1,4 @@
+import { CrimesService } from "./CrimeService/CrimesService";
 import { IServiceProvider } from "./IserviceProvider";
 import { ISafeLocationService } from "./SafeLocationService/ISafeLocationService";
 import { SafeLocationService } from "./SafeLocationService/SafeLocationService";
@@ -7,6 +8,7 @@ import { UserService } from "./UserService/UserService";
 export class ServiceProvider implements IServiceProvider{
     public readonly UserService: IUserService;
     public readonly SafeLocationService: ISafeLocationService;
+    public readonly CrimesService: CrimesService;
 
     /**
      *
@@ -14,7 +16,7 @@ export class ServiceProvider implements IServiceProvider{
     constructor() {
         this.UserService = new UserService();
         this.SafeLocationService = new SafeLocationService();
-        
+        this.CrimesService = new CrimesService();
     }
     
 }

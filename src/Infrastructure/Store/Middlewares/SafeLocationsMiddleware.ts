@@ -18,12 +18,12 @@ async (action: Action) =>
         } catch (error) {
             
         }
+        let error = ''
         const cancellationController = new AbortController();
         next(clearSafeLocations())
         next(updateLoadingStatus({isLoading: true, error: '', abortRequest: cancellationController}))
         let safeLocationsList = await serviceProvider.SafeLocationService.getSafeLocationsFromPinCode(action.payload.pinCode, cancellationController.signal)
         next(updateSafeLocations(safeLocationsList));
-        let error = ''
         if(safeLocationsList.length === 0){
             error = 'No Data found'
         }
@@ -38,12 +38,12 @@ async (action: Action) =>
         } catch (error) {
             
         }
+        let error = ''
         const cancellationController = new AbortController();
         next(clearSafeLocations())
         next(updateLoadingStatus({isLoading: true, error: '', abortRequest: cancellationController}))
         let safeLocationsList = await serviceProvider.SafeLocationService.getSafeLocationFromLatLong((action.payload.lat || 0), (action.payload.long || 0), cancellationController.signal);
         next(updateSafeLocations(safeLocationsList));
-        let error = ''
         if(safeLocationsList.length === 0){
             error = 'No Data found'
         }
@@ -51,5 +51,5 @@ async (action: Action) =>
         next(updateLoadingStatus({isLoading: false, error, abortRequest: cancellationController}))
     }
 
-    next(action);
+    return next(action);
 }
