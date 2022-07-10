@@ -11,9 +11,15 @@ function SafeLocationListScreen(): JSX.Element {
 
     return (
         <View style={{ flex: 1 }}>
-            <Text>Safe Locations in your PinCode </Text>
-            {safeLocations.isLoading ? <ActivityIndicator size="large" /> : null}
-            <View style={{backgroundColor: '#e3e1e1', marginTop: 10, marginHorizontal: 2, borderWidth: 0.2}}>
+
+            {safeLocations.isLoading ? <ActivityIndicator size="large" /> :
+                <View style={{ height: 50, padding: 5 }}>
+                    <Text style={{ textAlign: 'center', textAlignVertical: 'center' }}>
+                        <Text style={{ fontSize: 15 }}>Safe Locations Found : </Text>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold' }}>    {safeLocations.safeLocations.length}</Text>
+                    </Text>
+                </View>}
+            <View style={{ backgroundColor: '#e3e1e1', marginTop: 10, marginHorizontal: 2, borderWidth: 0.2 }}>
                 <List.AccordionGroup>
 
                     {safeLocations.error ? <Text style={{ color: 'red' }}>{safeLocations.error}</Text> :

@@ -10,6 +10,7 @@ import { searchSafeLocationFromLatLong, searchSafeLocationFromPinCode } from '..
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../Utils/AppNavigator';
 import { NavigationContext, useNavigation } from '@react-navigation/native';
+import { searchCrimesFromLatLong, searchCrimesFromPinCode } from '../../Infrastructure/Store/Slices/CrimeSlice';
 
 type HomeScreenProps = NativeStackScreenProps<AppStackParamList, 'Home'>
 
@@ -53,11 +54,10 @@ function HomeScreen(props: HomeScreenProps) {
     getLocation().then(res => {
       if(res){
         setLocationLoadingError('');
-        const action = searchSafeLocationFromLatLong({lat: res?.coords.latitude, long: res?.coords.longitude});
-        console.log(action)
-        console.log(action)
-        dispatch(action)
-        props.navigation.navigate('SafeLocationList');
+      
+        dispatch(searchSafeLocationFromLatLong({lat: res?.coords.latitude, long: res?.coords.longitude}));
+        dispatch(searchCrimesFromLatLong({lat: res?.coords.latitude, long: res?.coords.longitude}));
+        props.navigation.navigate('Results');
       }
       else{
         setLocationLoadingError('Unable to access your location.')
@@ -68,7 +68,8 @@ function HomeScreen(props: HomeScreenProps) {
 
   function GetLocationByPinCode(){
     dispatch(searchSafeLocationFromPinCode({pinCode}))
-    props.navigation.navigate('SafeLocationList');
+    dispatch(searchCrimesFromPinCode({pinCode}))
+    props.navigation.navigate('Results');
   }
 
   return (

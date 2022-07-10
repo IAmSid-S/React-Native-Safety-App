@@ -4,7 +4,7 @@ import { IServiceProvider } from "../../Services/IserviceProvider";
 import { searchCrimesFromPinCode, clearCrimes, updateLoadingStatus, updateCrimes, searchCrimesFromLatLong } from "../Slices/CrimeSlice";
 import { AppDispatch, RootState } from "../store";
 
-export const safeLocationsMiddleware = 
+export const crimesMiddleware = 
 
 (serviceProvider: IServiceProvider) : Middleware => 
 ({getState}: MiddlewareAPI) =>

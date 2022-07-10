@@ -6,6 +6,7 @@ type CrimeState = Crimes & {isLoading: boolean, error: string, abortRequest: Abo
 
 const initialValue : CrimeState = { 
     pinCode: '',
+    totalCrimes: 0,
     crimeList: [],
     isLoading: false,
     error: '',
@@ -20,8 +21,9 @@ const CrimeSlice = createSlice({
 
     reducers: {
         updateCrimes(state: {value: CrimeState}, action: PayloadAction<Crimes>){
-            state.value.crimeList = action.payload.crimeList;
+            state.value.crimeList = action.payload.crimeList.sort((a,b) => b.count - a.count);
             state.value.pinCode = action.payload.pinCode;
+            state.value.totalCrimes = action.payload.totalCrimes;
         },
 
         updateLoadingStatus(state: {value: CrimeState}, action: PayloadAction<{isLoading: boolean, error: string, abortRequest: AbortController}>){
@@ -32,7 +34,8 @@ const CrimeSlice = createSlice({
         clearCrimes(state: {value: CrimeState}){
             state.value.crimeList = [];
             state.value.error = '',
-            state.value.pinCode = ''
+            state.value.pinCode = '',
+            state.value.totalCrimes = 0
         }
     }
 })

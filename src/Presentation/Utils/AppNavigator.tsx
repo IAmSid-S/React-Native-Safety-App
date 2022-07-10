@@ -6,10 +6,11 @@ import HomeScreen from "../Screens/HomeScreen";
 import SafeLocationListScreen from "../Screens/SafeLocationListScreen";
 import { useAppDispatch } from "../../Infrastructure/Store/store";
 import { clearAuthToken, logout } from "../../Infrastructure/Store/Slices/UserSlice";
+import ResultsNavigator from "./ResultsNavigator";
 
 export type AppStackParamList = {
     Home: undefined;
-    SafeLocationList: undefined;
+    Results: undefined;
 };
 
 export default function AppNavigator(): JSX.Element {
@@ -21,7 +22,7 @@ export default function AppNavigator(): JSX.Element {
                 <AppStack.Screen name= "Home" component={HomeScreen} options={{
                 headerRight: () => <Button onPress={() => dispatch(logout())}><Icon size={30} name="logout"/></Button>
             }} />
-                <AppStack.Screen name="SafeLocationList" component={SafeLocationListScreen} />
+                <AppStack.Screen name="Results" component={ResultsNavigator} />
             </AppStack.Navigator>
             
         </NavigationContainer>

@@ -9,6 +9,7 @@ import UserSlice from "./Slices/UserSlice";
 import SafeLocationSlice from "./Slices/SafeLocationsSlice";
 import { safeLocationsMiddleware } from "./Middlewares/SafeLocationsMiddleware";
 import CrimeSlice from "./Slices/CrimeSlice";
+import { crimesMiddleware } from "./Middlewares/crimesMiddleware";
 
 
 const serviceProvider = new ServiceProvider();
@@ -24,7 +25,8 @@ export const store = configureStore({
             loggerMiddleware(serviceProvider),
             metaMiddleware(serviceProvider),
             userMiddleware(serviceProvider),
-            safeLocationsMiddleware(serviceProvider)
+            safeLocationsMiddleware(serviceProvider),
+            crimesMiddleware(serviceProvider)
         )
     }
 });
