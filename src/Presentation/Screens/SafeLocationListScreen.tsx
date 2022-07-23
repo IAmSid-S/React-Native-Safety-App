@@ -36,14 +36,14 @@ function SafeLocationListScreen(): JSX.Element {
                         <Text style={{ fontSize: 25, fontWeight: 'bold' }}>    {safeLocations.safeLocations.length}</Text>
                     </Text>
                     <View style={{ flexDirection: 'row', alignContent: 'space-around', justifyContent: 'center' }}>
-                        <Button onPress={() => toggleSelection('police_station')} style={{ borderRadius: 50, margin: 10, backgroundColor: (selectedList.police_station ? '#6200ee' : '#a075dd') }} mode='contained' icon='police-badge' ><Text style={{ fontSize: 10 }}>Police Stations : {safeLocations.safeLocations.filter(x => x.type === 'police_station').length}</Text></Button>
-                        <Button onPress={() => toggleSelection('hospital')} style={{borderRadius: 50, margin: 10, backgroundColor: (selectedList.hospital ? '#6200ee' : '#a075dd') }} mode='contained' icon='hospital'><Text style={{ fontSize: 10 }}>Hospitals : {safeLocations.safeLocations.filter(x => x.type === 'hospital').length}</Text></Button>
+                        <Button onPress={() => toggleSelection('police_station')} style={{ borderRadius: 50, margin: 10, backgroundColor: (selectedList.police_station ? '#6200ee' : 'lightgray') }} mode='contained' icon='police-badge' ><Text style={{ fontSize: 10 }}>Police Stations : {safeLocations.safeLocations.filter(x => x.type === 'police_station').length}</Text></Button>
+                        <Button onPress={() => toggleSelection('hospital')} style={{borderRadius: 50, margin: 10, backgroundColor: (selectedList.hospital ? '#6200ee' : 'lightgray') }} mode='contained' icon='hospital'><Text style={{ fontSize: 10 }}>Hospitals : {safeLocations.safeLocations.filter(x => x.type === 'hospital').length}</Text></Button>
                     </View>
                 </View>}
             <View style={{ backgroundColor: '#e3e1e1', marginTop: 10, marginHorizontal: 2, borderWidth: 0.2, flex: 1 }}>
                 <List.AccordionGroup>
 
-                    {safeLocations.error ? <Text style={{ color: 'red' }}>{safeLocations.error}</Text> :
+                    {safeLocations.error ? <View style={{flex: 1, justifyContent: 'center'}}><Text style={{fontSize: 30, alignSelf: 'center' }}>{safeLocations.error}</Text></View>:
                         <FlatList
                             data={filteredSafeLocations}
                             renderItem={({ item }) => <SafeLocationItem {...item}></SafeLocationItem>}

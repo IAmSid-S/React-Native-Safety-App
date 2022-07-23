@@ -4,12 +4,12 @@ import { CrimeKeyValPair } from "../../../Types/Models/CrimeModel";
 
 export default function CrimeTile(props: CrimeKeyValPair) {
     return (
-        <View style={{ height: 100, width: '50%', borderColor: 'black', borderWidth: 1, padding: 10}}>
+        <View style={{ height: 150, width: '47%', borderRadius: 20, marginTop: 10, marginHorizontal: 5, borderColor: 'dimgray', borderWidth: 2, padding: 10, backgroundColor: '#ccc'}}>
             <View>
                 <Text>{props.type}</Text>
             </View>
-            <View style={{alignContent: 'flex-end', justifyContent: 'flex-end', height: 50, paddingLeft: 30}}>
-                <Text style={{fontSize: 30, fontWeight: 'bold'}}>{props.count}</Text>
+            <View style={{alignContent: 'center', justifyContent: 'center', flex: 1, paddingLeft: 30}}>
+                <Text style={{fontSize: 40, fontWeight: 'bold'}}>{props.count}</Text>
             </View>
         </View>
     );
